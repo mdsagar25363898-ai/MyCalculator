@@ -2,47 +2,45 @@ let currentValue = "0";
 let expression = "";
 let justCalculated = false;
 
-
-/* Elements */
-
-const display =
-    document.getElementById("display");
-
-const historyDisplay =
-    document.getElementById("history");
-
-const historyList =
-    document.getElementById("historyList");
+const display = document.getElementById("display");
+const historyDisplay = document.getElementById("history");
+const historyList = document.getElementById("historyList");
 
 
-/* Display */
+// =========================
+// DISPLAY UPDATE
+// =========================
 
 function updateDisplay() {
+    if (display) {
+        display.textContent = currentValue;
+    }
 
-    display.textContent = currentValue;
-
-    historyDisplay.textContent = expression;
+    if (historyDisplay) {
+        historyDisplay.textContent = expression;
+    }
 }
 
 
-/* Numbers */
+// =========================
+// NUMBER
+// =========================
 
 function appendNumber(number) {
 
     if (justCalculated) {
-
         expression = "";
         currentValue = "0";
-
         justCalculated = false;
     }
 
+    if (currentValue === "Error") {
+        currentValue = "0";
+    }
+
     if (currentValue === "0") {
-
         currentValue = number;
-
     } else {
-
         currentValue += number;
     }
 
@@ -50,20 +48,19 @@ function appendNumber(number) {
 }
 
 
-/* Decimal */
+// =========================
+// DECIMAL
+// =========================
 
 function appendDecimal() {
 
     if (justCalculated) {
-
         expression = "";
         currentValue = "0";
-
         justCalculated = false;
     }
 
     if (!currentValue.includes(".")) {
-
         currentValue += ".";
     }
 
@@ -71,35 +68,35 @@ function appendDecimal() {
 }
 
 
-/* Parentheses */
+// =========================
+// PARENTHESES
+// =========================
 
 function appendParenthesis(type) {
 
     if (justCalculated) {
-
         expression = "";
         currentValue = "0";
-
         justCalculated = false;
     }
 
     if (type === "(") {
 
         if (currentValue !== "0") {
-
             expression += currentValue;
+            expression += "*";
         }
 
         expression += "(";
-
         currentValue = "0";
 
     } else {
 
-        expression += currentValue;
+        if (currentValue !== "0") {
+            expression += currentValue;
+        }
 
         expression += ")";
-
         currentValue = "0";
     }
 
@@ -107,19 +104,37 @@ function appendParenthesis(type) {
 }
 
 
-/* Operators */
+// =========================
+// OPERATOR
+// =========================
 
 function chooseOperator(operator) {
 
+    if (currentValue === "Error") {
+        return;
+    }
+
     if (justCalculated) {
-
         expression = currentValue;
-
         justCalculated = false;
-
     } else {
+        if (currentValue !== "0") {
+            expression += currentValue;
+        }
+    }
 
-        expression += currentValue;
+    // Convert display operators to JavaScript operators
+    if (operator === "×") {
+        operator = "*";
+    }
+
+    if (operator === "÷") {
+        operator = "/";
+    }
+
+    // Prevent duplicate operators
+    if (/[+\-*/]$/.test(expression)) {
+        expression = expression.slice(0, -1);
     }
 
     expression += operator;
@@ -130,544 +145,415 @@ function chooseOperator(operator) {
 }
 
 
-/* AC */
+// =========================
+// CLEAR
+// =========================
 
 function clearDisplay() {
 
     currentValue = "0";
-
     expression = "";
-
     justCalculated = false;
 
     updateDisplay();
 }
 
 
-/* Delete */
+// =========================
+// DELETE
+// =========================
 
 function deleteLast() {
 
     if (justCalculated) {
-
-        clearDisplay();
-
+        currentValue = "0";
+        expression = "";
+        justCalculated = false;
+        updateDisplay();
         return;
     }
 
-    if (currentValue.length > 1) {
+    if (currentValue !== "0") {
 
-        currentValue =
-            currentValue.slice(0, -1);
+        currentValue = currentValue.slice(0, -1);
 
-    } else {
+        if (currentValue === "" || currentValue === "-") {
+            currentValue = "0";
+        }
 
-        currentValue = "0";
+    } else if (expression.length > 0) {
+
+        expression = expression.slice(0, -1);
     }
 
     updateDisplay();
 }
 
 
-/* Percentage */
+// =========================
+// PERCENTAGE
+// =========================
 
 function percentage() {
 
-    const value =
-        parseFloat(currentValue);
+    if (currentValue === "Error") {
+        return;
+    }
 
-    if (isNaN(value)) return;
+    let number = parseFloat(currentValue);
 
-    currentValue =
-        String(value / 100);
+    if (!isNaN(number)) {
 
-    updateDisplay();
-}
+        number = number / 100;
 
-
-/* Plus / Minus */
-
-function toggleSign() {
-
-    if (currentValue === "0") return;
-
-    if (currentValue.startsWith("-")) {
-
-        currentValue =
-            currentValue.substring(1);
-
-    } else {
-
-        currentValue =
-            "-" + currentValue;
+        currentValue = String(number);
     }
 
     updateDisplay();
 }
 
 
-/* Square */
+// =========================
+// SQUARE
+// =========================
 
 function square() {
 
-    const value =
-        parseFloat(currentValue);
+    if (currentValue === "Error") {
+        return;
+    }
 
-    if (isNaN(value)) return;
+    let number = parseFloat(currentValue);
 
-    currentValue =
-        String(value * value);
+    if (isNaN(number)) {
+        return;
+    }
+
+    currentValue = String(number * number);
+
+    justCalculated = true;
 
     updateDisplay();
 }
 
 
-/* Square Root */
+// =========================
+// SQUARE ROOT
+// =========================
 
 function squareRoot() {
 
-    const value =
-        parseFloat(currentValue);
-
-    if (isNaN(value) || value < 0) {
-
-        currentValue = "Error";
-
-        updateDisplay();
-
+    if (currentValue === "Error") {
         return;
     }
 
-    currentValue =
-        String(Math.sqrt(value));
+    let number = parseFloat(currentValue);
+
+    if (isNaN(number)) {
+        return;
+    }
+
+    if (number < 0) {
+
+        currentValue = "Error";
+        expression = "√(" + number + ")";
+
+        updateDisplay();
+        return;
+    }
+
+    let result = Math.sqrt(number);
+
+    currentValue = formatResult(result);
+    justCalculated = true;
 
     updateDisplay();
 }
 
 
-/* Pi */
+// =========================
+// PLUS / MINUS
+// =========================
 
-function appendConstant(name) {
+function toggleSign() {
 
-    if (name === "pi") {
+    if (currentValue === "0" || currentValue === "Error") {
+        return;
+    }
 
-        currentValue =
-            String(Math.PI);
+    if (currentValue.startsWith("-")) {
+        currentValue = currentValue.substring(1);
+    } else {
+        currentValue = "-" + currentValue;
     }
 
     updateDisplay();
 }
 
 
-/* Scientific Functions */
+// =========================
+// PI
+// =========================
+
+function appendConstant(constant) {
+
+    if (justCalculated) {
+        expression = "";
+        currentValue = "0";
+        justCalculated = false;
+    }
+
+    if (constant === "pi") {
+
+        if (currentValue === "0") {
+            currentValue = String(Math.PI);
+        } else {
+            expression += currentValue;
+            expression += "*";
+            currentValue = String(Math.PI);
+        }
+    }
+
+    updateDisplay();
+}
+
+
+// =========================
+// SCIENTIFIC FUNCTIONS
+// =========================
 
 function scientificFunction(func) {
 
-    const value =
-        parseFloat(currentValue);
-
-    if (isNaN(value)) return;
-
-    let result;
-
-    if (func === "sin") {
-
-        result =
-            Math.sin(
-                value * Math.PI / 180
-            );
-    }
-
-    else if (func === "cos") {
-
-        result =
-            Math.cos(
-                value * Math.PI / 180
-            );
-    }
-
-    else if (func === "tan") {
-
-        result =
-            Math.tan(
-                value * Math.PI / 180
-            );
-    }
-
-    else if (func === "log") {
-
-        if (value <= 0) {
-
-            currentValue = "Error";
-
-            updateDisplay();
-
-            return;
-        }
-
-        result =
-            Math.log10(value);
-    }
-
-    else if (func === "ln") {
-
-        if (value <= 0) {
-
-            currentValue = "Error";
-
-            updateDisplay();
-
-            return;
-        }
-
-        result =
-            Math.log(value);
-    }
-
-    currentValue =
-        formatNumber(result);
-
-    updateDisplay();
-}
-
-
-/* Factorial */
-
-function factorial() {
-
-    const value =
-        parseInt(currentValue);
-
-    if (
-        isNaN(value) ||
-        value < 0 ||
-        value > 170 ||
-        value !== parseFloat(currentValue)
-    ) {
-
-        currentValue = "Error";
-
-        updateDisplay();
-
+    if (currentValue === "Error") {
         return;
     }
 
-    let result = 1;
+    let number = parseFloat(currentValue);
 
-    for (let i = 2; i <= value; i++) {
-
-        result *= i;
+    if (isNaN(number)) {
+        return;
     }
 
-    currentValue =
-        String(result);
+    let result;
 
-    updateDisplay();
-}
+    // Use degrees
+    let radians = number * Math.PI / 180;
 
+    if (func === "sin") {
+        result = Math.sin(radians);
+    }
 
-/* Calculate */
+    else if (func === "cos") {
+        result = Math.cos(radians);
+    }
 
-function calculate() {
+    else if (func === "tan") {
+        result = Math.tan(radians);
+    }
 
-    try {
+    if (result !== undefined) {
 
-        let fullExpression =
-            expression + currentValue;
-
-        if (!fullExpression) return;
-
-
-        /* Convert symbols */
-
-        fullExpression =
-            fullExpression
-                .replace(/×/g, "*")
-                .replace(/÷/g, "/")
-                .replace(/−/g, "-")
-                .replace(/\^/g, "**");
-
-
-        /* Check brackets */
-
-        const open =
-            (fullExpression.match(/\(/g) || []).length;
-
-        const close =
-            (fullExpression.match(/\)/g) || []).length;
-
-        if (open > close) {
-
-            fullExpression +=
-                ")".repeat(open - close);
-        }
-
-
-        const result =
-            Function(
-                '"use strict"; return (' +
-                fullExpression +
-                ')'
-            )();
-
-
-        if (!isFinite(result)) {
-
-            currentValue = "Error";
-
-            expression = "";
-
-            updateDisplay();
-
-            return;
-        }
-
-
-        const formatted =
-            formatNumber(result);
-
-
-        /* Save History */
-
-        addHistory(
-            expression + currentValue,
-            formatted
-        );
-
-
-        currentValue = formatted;
-
-        expression = "";
+        currentValue = formatResult(result);
 
         justCalculated = true;
 
         updateDisplay();
+    }
+}
 
+
+// =========================
+// CALCULATE
+// =========================
+
+function calculate() {
+
+    if (currentValue === "Error") {
+        return;
     }
 
-    catch (error) {
+    let fullExpression = expression + currentValue;
+
+    if (fullExpression.trim() === "") {
+        return;
+    }
+
+    try {
+
+        let jsExpression = fullExpression;
+
+        // Replace percentage
+        jsExpression = jsExpression.replace(
+            /(\d+(?:\.\d+)?)%/g,
+            "($1/100)"
+        );
+
+        // Calculate
+        let result = Function(
+            '"use strict"; return (' + jsExpression + ')'
+        )();
+
+        if (
+            typeof result !== "number" ||
+            !isFinite(result)
+        ) {
+            throw new Error("Invalid calculation");
+        }
+
+        result = formatResult(result);
+
+        // Add to history
+        addHistory(fullExpression, result);
+
+        currentValue = result;
+        expression = fullExpression + " =";
+        justCalculated = true;
+
+        updateDisplay();
+
+    } catch (error) {
 
         currentValue = "Error";
-
-        expression = "";
+        expression = fullExpression;
 
         updateDisplay();
     }
 }
 
 
-/* Number Formatting */
+// =========================
+// FORMAT RESULT
+// =========================
 
-function formatNumber(number) {
+function formatResult(number) {
 
     if (!isFinite(number)) {
-
         return "Error";
     }
 
-    if (
-        Math.abs(number) >= 1e12 ||
-        (
-            Math.abs(number) > 0 &&
-            Math.abs(number) < 1e-10
-        )
-    ) {
+    // Remove floating point errors
+    number = Number(
+        parseFloat(number.toFixed(12))
+    );
 
-        return number.toExponential(8);
-    }
-
-    return Number(
-        number.toFixed(12)
-    ).toString();
+    return String(number);
 }
 
 
-/* =========================
-   HISTORY
-========================= */
-
-
-/* Load saved history */
-
-let savedHistory =
-    JSON.parse(
-        localStorage.getItem(
-            "calculatorHistory"
-        ) || "[]"
-    );
-
-
-function saveHistory() {
-
-    localStorage.setItem(
-        "calculatorHistory",
-        JSON.stringify(savedHistory)
-    );
-}
-
-
-/* Add History */
+// =========================
+// HISTORY
+// =========================
 
 function addHistory(exp, result) {
 
-    savedHistory.unshift({
-
-        expression: exp,
-
-        result: result
-
-    });
-
-
-    /* Maximum 30 items */
-
-    if (savedHistory.length > 30) {
-
-        savedHistory =
-            savedHistory.slice(0, 30);
-    }
-
-
-    saveHistory();
-
-    renderHistory();
-}
-
-
-/* Show History */
-
-function renderHistory() {
-
-    historyList.innerHTML = "";
-
-
-    if (savedHistory.length === 0) {
-
-        historyList.innerHTML =
-            '<div class="history-item">' +
-            'No history yet' +
-            '</div>';
-
+    if (!historyList) {
         return;
     }
 
+    const item = document.createElement("div");
 
-    savedHistory.forEach(
-        function(item) {
+    item.className = "history-item";
 
-            const div =
-                document.createElement("div");
+    item.textContent = exp + " = " + result;
 
-            div.className =
-                "history-item";
+    // Newest history first
+    historyList.prepend(item);
 
-
-            div.textContent =
-                item.expression +
-                " = " +
-                item.result;
+    // Save history
+    saveHistory();
+}
 
 
-            /* Click history */
+// =========================
+// SAVE HISTORY
+// =========================
 
-            div.onclick = function() {
+function saveHistory() {
 
-                currentValue =
-                    item.result;
+    if (!historyList) {
+        return;
+    }
 
-                expression = "";
+    const items = [];
 
-                justCalculated = true;
+    historyList
+        .querySelectorAll(".history-item")
+        .forEach(function(item) {
 
-                updateDisplay();
-            };
+            items.push(item.textContent);
+        });
 
-
-            historyList.appendChild(div);
-        }
+    localStorage.setItem(
+        "calculatorHistory",
+        JSON.stringify(items)
     );
 }
 
 
-/* Clear History */
+// =========================
+// LOAD HISTORY
+// =========================
+
+function loadHistory() {
+
+    if (!historyList) {
+        return;
+    }
+
+    const savedHistory =
+        localStorage.getItem("calculatorHistory");
+
+    if (!savedHistory) {
+        return;
+    }
+
+    try {
+
+        const items =
+            JSON.parse(savedHistory);
+
+        items.forEach(function(text) {
+
+            const item =
+                document.createElement("div");
+
+            item.className = "history-item";
+
+            item.textContent = text;
+
+            historyList.appendChild(item);
+        });
+
+    } catch (error) {
+
+        localStorage.removeItem(
+            "calculatorHistory"
+        );
+    }
+}
+
+
+// =========================
+// CLEAR HISTORY
+// =========================
 
 function clearHistory() {
 
-    savedHistory = [];
+    if (!historyList) {
+        return;
+    }
+
+    historyList.innerHTML = "";
 
     localStorage.removeItem(
         "calculatorHistory"
     );
-
-    renderHistory();
 }
 
 
-/* =========================
-   DARK / LIGHT MODE
-========================= */
+// =========================
+// START
+// =========================
 
-function toggleTheme() {
-
-    document.body.classList.toggle("light");
-
-
-    const isLight =
-        document.body.classList.contains(
-            "light"
-        );
-
-
-    localStorage.setItem(
-        "calculatorTheme",
-        isLight ? "light" : "dark"
-    );
-
-
-    const button =
-        document.querySelector(
-            ".theme-btn"
-        );
-
-
-    button.textContent =
-        isLight ? "☀️" : "🌙";
-}
-
-
-/* Load Theme */
-
-function loadTheme() {
-
-    const theme =
-        localStorage.getItem(
-            "calculatorTheme"
-        );
-
-
-    const button =
-        document.querySelector(
-            ".theme-btn"
-        );
-
-
-    if (theme === "light") {
-
-        document.body.classList.add("light");
-
-        button.textContent = "☀️";
-
-    } else {
-
-        button.textContent = "🌙";
-    }
-}
-
-
-/* Start */
-
-renderHistory();
-
-loadTheme();
-
+loadHistory();
 updateDisplay();
