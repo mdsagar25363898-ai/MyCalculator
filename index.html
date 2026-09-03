@@ -1,4 +1,4 @@
-)<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -17,67 +17,113 @@
 
 <body>
 
+    <div class="top-bar">
+        <h1>My Calculator</h1>
+
+        <button class="theme-btn"
+            onclick="toggleTheme()">
+            🌙
+        </button>
+    </div>
+
+
     <div class="calculator">
 
         <!-- Display -->
         <div class="display">
 
-            <!-- Current calculation -->
             <div id="history"></div>
 
-            <!-- Current number -->
             <div id="display">0</div>
 
         </div>
 
 
-        <!-- History List -->
-        <div id="historyList"></div>
+        <!-- History -->
+        <div class="history-box">
+
+            <div class="history-header">
+
+                <span>📜 History</span>
+
+                <button onclick="clearHistory()">
+                    🗑️ Clear
+                </button>
+
+            </div>
+
+            <div id="historyList"></div>
+
+        </div>
 
 
-        <!-- Calculator Buttons -->
+        <!-- Buttons -->
         <div class="buttons">
 
             <!-- Row 1 -->
             <button class="function"
-                onclick="clearDisplay()">AC</button>
+                onclick="clearDisplay()">
+                AC
+            </button>
 
             <button class="function"
-                onclick="deleteLast()">DEL</button>
+                onclick="deleteLast()">
+                DEL
+            </button>
 
             <button class="function"
-                onclick="percentage()">%</button>
+                onclick="percentage()">
+                %
+            </button>
 
             <button class="operator"
-                onclick="chooseOperator('÷')">÷</button>
+                onclick="chooseOperator('÷')">
+                ÷
+            </button>
 
 
             <!-- Row 2 -->
             <button class="function"
-                onclick="appendParenthesis('(')">(</button>
+                onclick="appendParenthesis('(')">
+                (
+            </button>
 
             <button class="function"
-                onclick="appendParenthesis(')')">)</button>
+                onclick="appendParenthesis(')')">
+                )
+            </button>
 
             <button class="function"
-                onclick="squareRoot()">√</button>
+                onclick="squareRoot()">
+                √
+            </button>
 
             <button class="operator"
-                onclick="chooseOperator('×')">×</button>
+                onclick="chooseOperator('×')">
+                ×
+            </button>
 
 
             <!-- Row 3 -->
             <button class="function"
-                onclick="square()">x²</button>
+                onclick="square()">
+                x²
+            </button>
 
             <button class="function"
-                onclick="toggleSign()">±</button>
+                onclick="toggleSign()">
+                ±
+            </button>
 
             <button class="function"
-                onclick="appendConstant('pi')">π</button>
+                onclick="appendConstant('pi')">
+                π
+            </button>
 
             <button class="operator"
-                onclick="chooseOperator('-')">−</button>
+                onclick="chooseOperator('-')">
+                −
+            </button>
 
 
             <!-- Row 4 -->
@@ -97,10 +143,34 @@
             </button>
 
             <button class="operator"
-                onclick="chooseOperator('+')">+</button>
+                onclick="chooseOperator('+')">
+                +
+            </button>
 
 
             <!-- Row 5 -->
+            <button class="scientific"
+                onclick="scientificFunction('log')">
+                log
+            </button>
+
+            <button class="scientific"
+                onclick="scientificFunction('ln')">
+                ln
+            </button>
+
+            <button class="scientific"
+                onclick="factorial()">
+                !
+            </button>
+
+            <button class="operator"
+                onclick="chooseOperator('^')">
+                xʸ
+            </button>
+
+
+            <!-- Row 6 -->
             <button onclick="appendNumber('7')">7</button>
 
             <button onclick="appendNumber('8')">8</button>
@@ -108,10 +178,12 @@
             <button onclick="appendNumber('9')">9</button>
 
             <button class="operator"
-                onclick="chooseOperator('÷')">÷</button>
+                onclick="chooseOperator('÷')">
+                ÷
+            </button>
 
 
-            <!-- Row 6 -->
+            <!-- Row 7 -->
             <button onclick="appendNumber('4')">4</button>
 
             <button onclick="appendNumber('5')">5</button>
@@ -119,10 +191,12 @@
             <button onclick="appendNumber('6')">6</button>
 
             <button class="operator"
-                onclick="chooseOperator('×')">×</button>
+                onclick="chooseOperator('×')">
+                ×
+            </button>
 
 
-            <!-- Row 7 -->
+            <!-- Row 8 -->
             <button onclick="appendNumber('1')">1</button>
 
             <button onclick="appendNumber('2')">2</button>
@@ -130,17 +204,21 @@
             <button onclick="appendNumber('3')">3</button>
 
             <button class="operator"
-                onclick="chooseOperator('-')">−</button>
+                onclick="chooseOperator('-')">
+                −
+            </button>
 
 
-            <!-- Row 8 -->
+            <!-- Row 9 -->
             <button
-                onclick="appendNumber('0')"
-                class="zero">
+                class="zero"
+                onclick="appendNumber('0')">
                 0
             </button>
 
-            <button onclick="appendDecimal()">.</button>
+            <button onclick="appendDecimal()">
+                .
+            </button>
 
             <button
                 class="equals"
@@ -158,7 +236,11 @@
     </div>
 
 
-    <!-- JavaScript -->
+    <footer>
+        My Calculator © 2026
+    </footer>
+
+
     <script src="script.js"></script>
 
 </body>
