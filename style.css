@@ -50,18 +50,21 @@ body.light {
 
 body {
     min-height: 100vh;
+
     background: var(--body-bg);
     color: var(--text);
+
     font-family: Arial, Helvetica, sans-serif;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    padding: 8px;
+    padding: 5px;
 
-    transition: background 0.3s ease,
-                color 0.3s ease;
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
 }
 
 
@@ -77,17 +80,17 @@ body {
     justify-content: space-between;
     align-items: center;
 
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .top-bar h1 {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: bold;
 }
 
 .theme-btn {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
 
     border: none;
     border-radius: 50%;
@@ -95,10 +98,9 @@ body {
     background: var(--calculator);
     color: var(--text);
 
-    font-size: 21px;
-    cursor: pointer;
+    font-size: 19px;
 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    cursor: pointer;
 }
 
 .theme-btn:active {
@@ -116,11 +118,12 @@ body {
 
     background: var(--calculator);
 
-    padding: 9px;
+    padding: 6px;
 
-    border-radius: 22px;
+    border-radius: 18px;
 
-    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+    box-shadow:
+        0 6px 20px rgba(0,0,0,0.35);
 }
 
 
@@ -129,15 +132,15 @@ body {
 ========================= */
 
 .display {
-    min-height: 70px;
+    min-height: 58px;
 
     background: var(--display);
 
-    border-radius: 16px;
+    border-radius: 13px;
 
-    padding: 8px 14px;
+    padding: 6px 10px;
 
-    margin-bottom: 9px;
+    margin-bottom: 6px;
 
     display: flex;
     flex-direction: column;
@@ -153,13 +156,13 @@ body {
 #history {
     width: 100%;
 
-    min-height: 16px;
+    min-height: 13px;
 
     color: var(--secondary);
 
-    font-size: 12px;
+    font-size: 10px;
 
-    margin-bottom: 3px;
+    margin-bottom: 2px;
 
     word-wrap: break-word;
 }
@@ -167,11 +170,11 @@ body {
 #display {
     width: 100%;
 
-    font-size: 32px;
+    font-size: 27px;
 
     font-weight: bold;
 
-    line-height: 1.15;
+    line-height: 1.1;
 
     overflow: hidden;
 
@@ -182,7 +185,7 @@ body {
 
 
 /* =========================
-   HISTORY
+   HISTORY BOX
 ========================= */
 
 .history-box {
@@ -190,11 +193,11 @@ body {
 
     border: 1px solid var(--border);
 
-    border-radius: 16px;
+    border-radius: 13px;
 
-    padding: 9px;
+    padding: 6px;
 
-    margin-bottom: 9px;
+    margin-bottom: 6px;
 }
 
 .history-header {
@@ -203,16 +206,16 @@ body {
     justify-content: space-between;
     align-items: center;
 
-    margin-bottom: 7px;
+    margin-bottom: 4px;
 }
 
 .history-header h2 {
-    font-size: 18px;
+    font-size: 15px;
 
     display: flex;
     align-items: center;
 
-    gap: 5px;
+    gap: 4px;
 }
 
 .history-header button,
@@ -223,11 +226,11 @@ body {
 
     color: white;
 
-    padding: 8px 12px;
+    padding: 5px 8px;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
-    font-size: 13px;
+    font-size: 10px;
 
     font-weight: bold;
 
@@ -239,22 +242,28 @@ body {
     transform: scale(0.95);
 }
 
+
+/* =========================
+   HISTORY LIST
+========================= */
+
 #historyList {
-    max-height: 105px;
+    max-height: 55px;
 
     overflow-y: auto;
 
-    padding-right: 3px;
+    padding-right: 2px;
 }
 
 .history-item {
     color: var(--secondary);
 
-    font-size: 14px;
+    font-size: 12px;
 
-    padding: 6px 2px;
+    padding: 4px 2px;
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+        1px solid var(--border);
 
     word-break: break-word;
 }
@@ -265,15 +274,16 @@ body {
 
 
 /* =========================
-   BUTTON GRID
+   KEYBOARD
 ========================= */
 
 .buttons {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
-    gap: 6px;
+    gap: 4px;
 }
 
 
@@ -282,17 +292,23 @@ body {
 ========================= */
 
 .buttons button {
-    height: 48px;
+    width: 100%;
+
+    height: 38px;
+
+    min-height: 38px;
+
+    padding: 0;
 
     border: none;
 
-    border-radius: 12px;
+    border-radius: 9px;
 
     background: var(--button);
 
     color: white;
 
-    font-size: 19px;
+    font-size: 16px;
 
     font-weight: bold;
 
@@ -363,7 +379,7 @@ body {
 
 
 /* =========================
-   CLEAR / DELETE
+   AC / DELETE
 ========================= */
 
 .buttons .clear,
@@ -392,13 +408,13 @@ footer {
 
     text-align: center;
 
-    margin-top: 8px;
+    margin-top: 5px;
 
-    padding: 7px;
+    padding: 4px;
 
     color: var(--secondary);
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 
@@ -407,7 +423,7 @@ footer {
 ========================= */
 
 #historyList::-webkit-scrollbar {
-    width: 4px;
+    width: 3px;
 }
 
 #historyList::-webkit-scrollbar-track {
@@ -428,117 +444,167 @@ footer {
 @media (max-width: 480px) {
 
     body {
-        padding: 6px;
+        padding: 4px;
     }
 
-    .calculator {
-        padding: 8px;
-
-        border-radius: 20px;
+    .top-bar {
+        margin-bottom: 4px;
     }
 
-    .display {
-        min-height: 68px;
-
-        padding: 8px 12px;
-
-        border-radius: 15px;
-
-        margin-bottom: 8px;
+    .top-bar h1 {
+        font-size: 18px;
     }
 
-    #display {
-        font-size: 31px;
-    }
-
-    .history-box {
-        padding: 8px;
-
-        border-radius: 15px;
-
-        margin-bottom: 8px;
-    }
-
-    .buttons {
-        gap: 5px;
-    }
-
-    .buttons button {
-        height: 46px;
-
-        border-radius: 11px;
+    .theme-btn {
+        width: 36px;
+        height: 36px;
 
         font-size: 18px;
     }
 
+    .calculator {
+        padding: 5px;
+
+        border-radius: 16px;
+    }
+
+    .display {
+        min-height: 55px;
+
+        padding: 5px 9px;
+
+        border-radius: 12px;
+
+        margin-bottom: 5px;
+    }
+
+    #history {
+        font-size: 9px;
+
+        min-height: 12px;
+    }
+
+    #display {
+        font-size: 25px;
+    }
+
+    .history-box {
+        padding: 5px;
+
+        border-radius: 12px;
+
+        margin-bottom: 5px;
+    }
+
+    .history-header {
+        margin-bottom: 3px;
+    }
+
+    .history-header h2 {
+        font-size: 14px;
+    }
+
+    .history-header button,
+    .history-box button {
+        padding: 4px 7px;
+
+        font-size: 9px;
+    }
+
+    #historyList {
+        max-height: 48px;
+    }
+
+    .history-item {
+        font-size: 11px;
+
+        padding: 3px 2px;
+    }
+
+    .buttons {
+        gap: 3px;
+    }
+
+    .buttons button {
+        height: 36px;
+
+        min-height: 36px;
+
+        border-radius: 8px;
+
+        font-size: 15px;
+    }
+
     footer {
-        margin-top: 7px;
+        margin-top: 4px;
+
+        padding: 3px;
+
+        font-size: 9px;
     }
 }
 
 
 /* =========================
-   VERY SMALL PHONES
+   SMALL PHONE
 ========================= */
 
 @media (max-width: 360px) {
 
     body {
-        padding: 5px;
+        padding: 3px;
     }
 
     .calculator {
-        padding: 7px;
+        padding: 4px;
     }
 
     .display {
-        min-height: 62px;
+        min-height: 50px;
 
-        padding: 7px 10px;
+        padding: 4px 8px;
     }
 
     #display {
-        font-size: 28px;
-    }
-
-    #history {
-        font-size: 11px;
+        font-size: 23px;
     }
 
     .history-box {
-        padding: 7px;
+        padding: 4px;
+    }
+
+    .buttons {
+        gap: 3px;
+    }
+
+    .buttons button {
+        height: 32px;
+
+        min-height: 32px;
+
+        border-radius: 7px;
+
+        font-size: 14px;
     }
 
     .history-header h2 {
-        font-size: 16px;
+        font-size: 13px;
     }
 
     .history-header button,
     .history-box button {
-        padding: 7px 9px;
+        padding: 3px 6px;
 
-        font-size: 11px;
-    }
-
-    .buttons {
-        gap: 4px;
-    }
-
-    .buttons button {
-        height: 42px;
-
-        border-radius: 9px;
-
-        font-size: 16px;
+        font-size: 8px;
     }
 
     .history-item {
-        font-size: 13px;
+        font-size: 10px;
 
-        padding: 5px 2px;
+        padding: 2px;
     }
 
     footer {
-        font-size: 10px;
+        font-size: 8px;
     }
 }
