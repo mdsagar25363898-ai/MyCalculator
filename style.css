@@ -10,7 +10,7 @@
 
 
 /* =========================
-   THEME COLORS
+   THEME
 ========================= */
 
 :root {
@@ -58,10 +58,10 @@ body {
     flex-direction: column;
     align-items: center;
 
+    padding: 8px;
+
     transition: background 0.3s ease,
                 color 0.3s ease;
-
-    padding: 10px;
 }
 
 
@@ -71,23 +71,23 @@ body {
 
 .top-bar {
     width: 100%;
-    max-width: 450px;
+    max-width: 420px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .top-bar h1 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
 }
 
 .theme-btn {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
 
     border: none;
     border-radius: 50%;
@@ -95,13 +95,10 @@ body {
     background: var(--calculator);
     color: var(--text);
 
-    font-size: 24px;
+    font-size: 21px;
     cursor: pointer;
 
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.25);
-
-    transition: 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
 .theme-btn:active {
@@ -115,18 +112,15 @@ body {
 
 .calculator {
     width: 100%;
-    max-width: 450px;
+    max-width: 420px;
 
     background: var(--calculator);
 
-    padding: 14px;
+    padding: 9px;
 
-    border-radius: 25px;
+    border-radius: 22px;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.35);
-
-    transition: background 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
 }
 
 
@@ -135,15 +129,15 @@ body {
 ========================= */
 
 .display {
-    min-height: 90px;
+    min-height: 70px;
 
     background: var(--display);
 
-    border-radius: 20px;
+    border-radius: 16px;
 
-    padding: 12px 18px;
+    padding: 8px 14px;
 
-    margin-bottom: 12px;
+    margin-bottom: 9px;
 
     display: flex;
     flex-direction: column;
@@ -156,34 +150,28 @@ body {
     overflow: hidden;
 }
 
-
-/* Small expression text */
-
 #history {
     width: 100%;
 
-    min-height: 18px;
+    min-height: 16px;
 
     color: var(--secondary);
 
-    font-size: 14px;
+    font-size: 12px;
 
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 
     word-wrap: break-word;
 }
 
-
-/* Main number */
-
 #display {
     width: 100%;
 
-    font-size: 42px;
+    font-size: 32px;
 
     font-weight: bold;
 
-    line-height: 1.2;
+    line-height: 1.15;
 
     overflow: hidden;
 
@@ -194,7 +182,7 @@ body {
 
 
 /* =========================
-   HISTORY BOX
+   HISTORY
 ========================= */
 
 .history-box {
@@ -202,15 +190,12 @@ body {
 
     border: 1px solid var(--border);
 
-    border-radius: 20px;
+    border-radius: 16px;
 
-    padding: 14px;
+    padding: 9px;
 
-    margin-bottom: 14px;
+    margin-bottom: 9px;
 }
-
-
-/* History header */
 
 .history-header {
     display: flex;
@@ -218,20 +203,17 @@ body {
     justify-content: space-between;
     align-items: center;
 
-    margin-bottom: 10px;
+    margin-bottom: 7px;
 }
 
 .history-header h2 {
-    font-size: 22px;
+    font-size: 18px;
 
     display: flex;
     align-items: center;
 
-    gap: 7px;
+    gap: 5px;
 }
-
-
-/* Clear button */
 
 .history-header button,
 .history-box button {
@@ -241,17 +223,15 @@ body {
 
     color: white;
 
-    padding: 12px 18px;
+    padding: 8px 12px;
 
-    border-radius: 12px;
+    border-radius: 10px;
 
-    font-size: 16px;
+    font-size: 13px;
 
     font-weight: bold;
 
     cursor: pointer;
-
-    transition: 0.2s;
 }
 
 .history-header button:active,
@@ -259,26 +239,20 @@ body {
     transform: scale(0.95);
 }
 
-
-/* History list */
-
 #historyList {
-    max-height: 150px;
+    max-height: 105px;
 
     overflow-y: auto;
 
-    padding-right: 4px;
+    padding-right: 3px;
 }
-
-
-/* History item */
 
 .history-item {
     color: var(--secondary);
 
-    font-size: 18px;
+    font-size: 14px;
 
-    padding: 10px 2px;
+    padding: 6px 2px;
 
     border-bottom: 1px solid var(--border);
 
@@ -297,29 +271,28 @@ body {
 .buttons {
     display: grid;
 
-    grid-template-columns:
-        repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
-    gap: 10px;
+    gap: 6px;
 }
 
 
 /* =========================
-   ALL BUTTONS
+   BUTTONS
 ========================= */
 
 .buttons button {
-    height: 70px;
+    height: 48px;
 
     border: none;
 
-    border-radius: 18px;
+    border-radius: 12px;
 
     background: var(--button);
 
     color: white;
 
-    font-size: 25px;
+    font-size: 19px;
 
     font-weight: bold;
 
@@ -330,15 +303,9 @@ body {
         background 0.2s ease;
 }
 
-
-/* Hover */
-
 .buttons button:hover {
     background: var(--button-hover);
 }
-
-
-/* Press */
 
 .buttons button:active {
     transform: scale(0.93);
@@ -346,7 +313,7 @@ body {
 
 
 /* =========================
-   NUMBER BUTTONS
+   NUMBER
 ========================= */
 
 .buttons .number {
@@ -355,7 +322,7 @@ body {
 
 
 /* =========================
-   OPERATOR BUTTONS
+   OPERATOR
 ========================= */
 
 .buttons .operator {
@@ -368,7 +335,7 @@ body {
 
 
 /* =========================
-   SCIENTIFIC BUTTONS
+   SCIENTIFIC
 ========================= */
 
 .buttons .scientific {
@@ -381,7 +348,7 @@ body {
 
 
 /* =========================
-   EQUAL BUTTON
+   EQUAL
 ========================= */
 
 .buttons .equal {
@@ -396,25 +363,17 @@ body {
 
 
 /* =========================
-   AC BUTTON
+   CLEAR / DELETE
 ========================= */
 
-.buttons .clear {
-    background: #5a6475;
-}
-
-
-/* =========================
-   DELETE BUTTON
-========================= */
-
+.buttons .clear,
 .buttons .delete {
     background: #5a6475;
 }
 
 
 /* =========================
-   ZERO BUTTON
+   ZERO
 ========================= */
 
 .buttons .zero {
@@ -429,17 +388,17 @@ body {
 footer {
     width: 100%;
 
-    max-width: 450px;
+    max-width: 420px;
 
     text-align: center;
 
-    margin-top: 14px;
+    margin-top: 8px;
 
-    padding: 10px;
+    padding: 7px;
 
     color: var(--secondary);
 
-    font-size: 13px;
+    font-size: 11px;
 }
 
 
@@ -448,7 +407,7 @@ footer {
 ========================= */
 
 #historyList::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
 }
 
 #historyList::-webkit-scrollbar-track {
@@ -457,6 +416,7 @@ footer {
 
 #historyList::-webkit-scrollbar-thumb {
     background: var(--button);
+
     border-radius: 10px;
 }
 
@@ -468,91 +428,51 @@ footer {
 @media (max-width: 480px) {
 
     body {
-        padding: 8px;
-    }
-
-    .top-bar {
-        margin-bottom: 8px;
-    }
-
-    .top-bar h1 {
-        font-size: 20px;
-    }
-
-    .theme-btn {
-        width: 44px;
-        height: 44px;
-
-        font-size: 21px;
+        padding: 6px;
     }
 
     .calculator {
-        padding: 10px;
+        padding: 8px;
 
-        border-radius: 22px;
+        border-radius: 20px;
     }
 
     .display {
-        min-height: 78px;
+        min-height: 68px;
 
-        padding: 10px 15px;
-
-        border-radius: 17px;
-
-        margin-bottom: 10px;
-    }
-
-    #history {
-        font-size: 12px;
-
-        min-height: 16px;
-    }
-
-    #display {
-        font-size: 36px;
-    }
-
-    .history-box {
-        padding: 11px;
-
-        border-radius: 17px;
-
-        margin-bottom: 10px;
-    }
-
-    .history-header h2 {
-        font-size: 19px;
-    }
-
-    .history-header button,
-    .history-box button {
-        padding: 10px 14px;
-
-        font-size: 14px;
-    }
-
-    .history-item {
-        font-size: 16px;
-
-        padding: 8px 2px;
-    }
-
-    .buttons {
-        gap: 8px;
-    }
-
-    .buttons button {
-        height: 62px;
+        padding: 8px 12px;
 
         border-radius: 15px;
 
-        font-size: 22px;
+        margin-bottom: 8px;
+    }
+
+    #display {
+        font-size: 31px;
+    }
+
+    .history-box {
+        padding: 8px;
+
+        border-radius: 15px;
+
+        margin-bottom: 8px;
+    }
+
+    .buttons {
+        gap: 5px;
+    }
+
+    .buttons button {
+        height: 46px;
+
+        border-radius: 11px;
+
+        font-size: 18px;
     }
 
     footer {
-        margin-top: 10px;
-
-        font-size: 12px;
+        margin-top: 7px;
     }
 }
 
@@ -563,44 +483,62 @@ footer {
 
 @media (max-width: 360px) {
 
+    body {
+        padding: 5px;
+    }
+
     .calculator {
-        padding: 8px;
+        padding: 7px;
     }
 
     .display {
-        min-height: 70px;
+        min-height: 62px;
 
-        padding: 8px 12px;
+        padding: 7px 10px;
     }
 
     #display {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     #history {
         font-size: 11px;
     }
 
-    .buttons {
-        gap: 6px;
-    }
-
-    .buttons button {
-        height: 55px;
-
-        border-radius: 13px;
-
-        font-size: 20px;
+    .history-box {
+        padding: 7px;
     }
 
     .history-header h2 {
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .history-header button,
     .history-box button {
-        padding: 8px 11px;
+        padding: 7px 9px;
 
-        font-size: 12px;
+        font-size: 11px;
+    }
+
+    .buttons {
+        gap: 4px;
+    }
+
+    .buttons button {
+        height: 42px;
+
+        border-radius: 9px;
+
+        font-size: 16px;
+    }
+
+    .history-item {
+        font-size: 13px;
+
+        padding: 5px 2px;
+    }
+
+    footer {
+        font-size: 10px;
     }
 }
