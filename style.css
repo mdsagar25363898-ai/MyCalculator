@@ -88,25 +88,33 @@ body {
         0 10px 30px rgba(0,0,0,0.35);
 }
 
-.display {
-    min-height: 145px;
-
+.display{
+    min-height: 90px;
     background: var(--display);
-
     border-radius: 20px;
-
-    padding: 18px;
-
+    padding: 12px 18px;
     margin-bottom: 12px;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-
     text-align: right;
-
     overflow: hidden;
 }
+
+#history {
+    min-height: 18px;
+    color: var(--secondary);
+    font-size: 14px;
+    margin-bottom: 4px;
+    word-wrap: break-word;
+}
+
+#display {
+    font-size: 42px;
+    font-weight: bold;
+}
+
+  
 
 #history {
     min-height: 25px;
