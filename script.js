@@ -1,15 +1,22 @@
 let currentValue = "0";
-let previousValue = "";
-let operator = null;
+let expression = "";
+let justCalculated = false;
 
 const display = document.getElementById("display");
-const history = document.getElementById("history");
+const historyDisplay = document.getElementById("history");
+const historyList = document.getElementById("historyList");
 
 function updateDisplay() {
   display.textContent = currentValue;
 }
 
 function appendNumber(number) {
+  if (justCalculated) {
+    expression = "";
+    currentValue = "0";
+    justCalculated = false;
+  }
+
   if (number === "." && currentValue.includes(".")) {
     return;
   }
@@ -23,81 +30,108 @@ function appendNumber(number) {
   updateDisplay();
 }
 
-function chooseOperator(selectedOperator) {
-  if (operator !== null) {
-    calculate();
+function appendParenthesis(parenthesis) {
+  if (justCalculated) {
+    expression = "";
+    currentValue = "0";
+    justCalculated = false;
   }
 
-  previousValue = currentValue;
-  operator = selectedOperator;
+  if (parenthesis === "(") {
+    if (currentValue !== "0") {
+      expression += currentValue + "*";
+    }
+
+    expression += "(";
+    currentValue = "0";
+  } else {
+    expression += currentValue;
+    expression += ")";
+    currentValue = "0";
+  }
+
+  historyDisplay.textContent = expression;
+  updateDisplay();
+}
+
+function chooseOperator(selectedOperator) {
+  if (justCalculated) {
+    expression = currentValue;
+    justCalculated = false;
+  } else {
+    expression += currentValue;
+  }
+
+  expression += selectedOperator;
   currentValue = "0";
 
-  history.textContent = previousValue + " " + getOperatorSymbol(selectedOperator);
+  historyDisplay.textContent = expression;
+  updateDisplay();
 }
 
 function calculate() {
-  if (operator === null || previousValue === "") {
+  let finalExpression = expression + currentValue;
+
+  if (!finalExpression) {
     return;
   }
 
-  const firstNumber = parseFloat(previousValue);
-  const secondNumber = parseFloat(currentValue);
+  try {
+    let result = evaluateExpression(finalExpression);
 
-  let result;
+    if (!isFinite(result)) {
+      throw new Error("Invalid calculation");
+    }
 
-  switch (operator) {
-    case "+":
-      result = firstNumber + secondNumber;
-      break;
+    result = Number(result.toFixed(10));
 
-    case "-":
-      result = firstNumber - secondNumber;
-      break;
+    addHistory(finalExpression, result);
 
-    case "*":
-      result = firstNumber * secondNumber;
-      break;
+    historyDisplay.textContent = finalExpression + " =";
+    currentValue = String(result);
+    expression = "";
+    justCalculated = true;
 
-    case "/":
-      if (secondNumber === 0) {
-        currentValue = "Error";
-        previousValue = "";
-        operator = null;
-        updateDisplay();
-        history.textContent = "Cannot divide by zero";
-        return;
-      }
-      result = firstNumber / secondNumber;
-      break;
+    updateDisplay();
+
+  } catch (error) {
+    currentValue = "Error";
+    historyDisplay.textContent = "Invalid expression";
+    expression = "";
+    justCalculated = true;
+
+    updateDisplay();
+  }
+}
+
+function evaluateExpression(exp) {
+  let safeExpression = exp
+    .replace(/×/g, "*")
+    .replace(/÷/g, "/");
+
+  if (!/^[0-9+\-*/().\s]+$/.test(safeExpression)) {
+    throw new Error("Invalid characters");
   }
 
-  history.textContent =
-    previousValue +
-    " " +
-    getOperatorSymbol(operator) +
-    " " +
-    currentValue +
-    " =";
-
-  currentValue = String(
-    Number.isInteger(result) ? result : parseFloat(result.toFixed(10))
-  );
-
-  previousValue = "";
-  operator = null;
-
-  updateDisplay();
+  return Function('"use strict"; return (' + safeExpression + ')')();
 }
 
 function clearDisplay() {
   currentValue = "0";
-  previousValue = "";
-  operator = null;
-  history.textContent = "";
+  expression = "";
+  justCalculated = false;
+
+  historyDisplay.textContent = "";
+
   updateDisplay();
 }
 
 function deleteLast() {
+  if (justCalculated) {
+    clearDisplay();
+    return;
+  }
+
   if (currentValue.length > 1) {
     currentValue = currentValue.slice(0, -1);
   } else {
@@ -108,7 +142,7 @@ function deleteLast() {
 }
 
 function percentage() {
-  const number = parseFloat(currentValue);
+  let number = parseFloat(currentValue);
 
   if (isNaN(number)) {
     return;
@@ -118,19 +152,136 @@ function percentage() {
   updateDisplay();
 }
 
-function getOperatorSymbol(op) {
-  switch (op) {
-    case "+":
-      return "+";
-    case "-":
-      return "−";
-    case "*":
-      return "×";
-    case "/":
-      return "÷";
-    default:
-      return "";
+function squareRoot() {
+  let number = parseFloat(currentValue);
+
+  if (isNaN(number) || number < 0) {
+    currentValue = "Error";
+    updateDisplay();
+    return;
   }
+
+  let result = Math.sqrt(number);
+
+  addHistory("√" + number, result);
+
+  historyDisplay.textContent = "√" + number + " =";
+  currentValue = String(Number(result.toFixed(10)));
+  justCalculated = true;
+
+  updateDisplay();
+}
+
+function square() {
+  let number = parseFloat(currentValue);
+
+  if (isNaN(number)) {
+    return;
+  }
+
+  let result = number * number;
+
+  addHistory(number + "²", result);
+
+  historyDisplay.textContent = number + "² =";
+  currentValue = String(Number(result.toFixed(10)));
+  justCalculated = true;
+
+  updateDisplay();
+}
+
+function toggleSign() {
+  if (currentValue === "0" || currentValue === "Error") {
+    return;
+  }
+
+  if (currentValue.startsWith("-")) {
+    currentValue = currentValue.substring(1);
+  } else {
+    currentValue = "-" + currentValue;
+  }
+
+  updateDisplay();
+}
+
+function appendConstant(constant) {
+  if (constant === "pi") {
+    if (justCalculated) {
+      expression = "";
+      justCalculated = false;
+    }
+
+    currentValue = String(Number(Math.PI.toFixed(10)));
+    updateDisplay();
+  }
+}
+
+function scientificFunction(functionName) {
+  let number = parseFloat(currentValue);
+
+  if (isNaN(number)) {
+    return;
+  }
+
+  let radians = number * Math.PI / 180;
+  let result;
+
+  switch (functionName) {
+    case "sin":
+      result = Math.sin(radians);
+      break;
+
+    case "cos":
+      result = Math.cos(radians);
+      break;
+
+    case "tan":
+      result = Math.tan(radians);
+      break;
+
+    default:
+      return;
+  }
+
+  result = Number(result.toFixed(10));
+
+  addHistory(functionName + "(" + number + "°)", result);
+
+  historyDisplay.textContent =
+    functionName + "(" + number + "°) =";
+
+  currentValue = String(result);
+  justCalculated = true;
+
+  updateDisplay();
+}
+
+function addHistory(calculation, result) {
+  if (!historyList) {
+    return;
+  }
+
+  const empty = historyList.querySelector(".empty-history");
+
+  if (empty) {
+    empty.remove();
+  }
+
+  const item = document.createElement("div");
+  item.className = "history-item";
+
+  item.textContent = calculation + " = " + result;
+
+  historyList.prepend(item);
+}
+
+function clearHistory() {
+  if (!historyList) {
+    return;
+  }
+
+  historyList.innerHTML =
+    '<p class="empty-history">No calculations yet</p>';
 }
 
 document.addEventListener("keydown", function(event) {
@@ -138,22 +289,33 @@ document.addEventListener("keydown", function(event) {
 
   if (!isNaN(key) || key === ".") {
     appendNumber(key);
+    return;
   }
 
   if (key === "+" || key === "-" || key === "*" || key === "/") {
     chooseOperator(key);
+    return;
+  }
+
+  if (key === "(" || key === ")") {
+    appendParenthesis(key);
+    return;
   }
 
   if (key === "Enter" || key === "=") {
+    event.preventDefault();
     calculate();
-  }
-
-  if (key === "Escape") {
-    clearDisplay();
+    return;
   }
 
   if (key === "Backspace") {
     deleteLast();
+    return;
+  }
+
+  if (key === "Escape") {
+    clearDisplay();
+    return;
   }
 
   if (key === "%") {
